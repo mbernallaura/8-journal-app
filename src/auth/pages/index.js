@@ -1,2 +1,2 @@
 export * from './LoginPage';
-export * from './RegisterPager';
+export * from './RegisterPage';
