@@ -27,10 +27,10 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
             const [ fn, errorMessage = 'Este campo es requerido' ] = formValidations[ formField ];
 
             //!formState[ formField ] para saber el valor de la funcion, aplicas lo del objeto de javascript
-            //ejm: const formState ={email: function, password: 'Mustang'}
-            //formState[email] => con esta nomenclatura sabemos que valor tiene el objeto formState en el atributo email, en este caso va a traer la funcion
-            //Como la funcion es esta (value) => value.includes('@'), evalua si el string tiene @, si la funcion es verdad, entonces null sino, manda un mensaje de error
-            //se capturo al desfragmentar el objeto
+            //en este caso en const formState ={email: 'ejemplo@gmail.com', password: 'Mustang'} trae estos valores
+            //formState[email] => con esta nomeclatura sabemos que valor tiene el objeto formState en el atributo email, en este caso va a traer lo que ha colocado el usuario en el campo email
+            //ya que tenemos ese valor ahora con la funcion desestructurada del objeto podemos introducirle ese valor para que evalue
+            //Como la funcion es: (value) => value.includes('@'), evalua si el string tiene @, si la funcion es verdad, entonces null sino, manda un mensaje de error
             formCheckedValues[`${ formField }Valid`] = fn(formState[ formField ]) ? null : errorMessage; 
         }
 
