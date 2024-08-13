@@ -4,7 +4,7 @@ import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks/useForm';
 
 const formData = {
-  emal: 'prueba@gmail.com',
+  email: 'prueba@gmail.com',
   password: '123456',
   displayName: 'Prueba'
 }
@@ -19,8 +19,11 @@ export const RegisterPage = () => {
   const { 
     formState, displayName, email, password, onInputChange, 
     isFormValid, displayNameValid, emailValid, passwordValid
-  } =useForm(formData);
+  } =useForm(formData, formValidations);
   
+  console.log(displayNameValid);
+  
+
   const onSubmit = (event) =>{
     event.preventDefault();
     console.log(formState, formValidations);
@@ -53,6 +56,8 @@ export const RegisterPage = () => {
               name='email' 
               value={ email }
               onChange={ onInputChange }
+              error ={ !emailValid }
+              helperText={ emailValid }
             />
           </Grid>
 
@@ -65,6 +70,8 @@ export const RegisterPage = () => {
               name='password'
               value={ password }
               onChange={ onInputChange }
+              error ={ !passwordValid }
+              helperText={ passwordValid }
             />
           </Grid>
 
