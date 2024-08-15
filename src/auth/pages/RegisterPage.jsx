@@ -11,8 +11,8 @@ const formData = {
 
 const formValidations = {
   email: [(value) => value.includes('@'), 'El email debe tener un @'],
-  password: [(value) => value.lenght >=6 , 'El password debe tener mas de 6 letras'],
-  displayName: [(value) => value.includes >=1, 'El nombre es obligatorio']
+  password: [(value) => value.length >=6 , 'El password debe tener mas de 6 letras'],
+  displayName: [(value) => value.length >=1, 'El nombre es obligatorio']
 }
 export const RegisterPage = () => {
 
@@ -23,7 +23,7 @@ export const RegisterPage = () => {
   
   const onSubmit = (event) =>{
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
   }
 
   return (
