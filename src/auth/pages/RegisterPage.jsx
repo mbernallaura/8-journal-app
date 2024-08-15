@@ -9,28 +9,26 @@ const formData = {
   displayName: 'Prueba'
 }
 
+const formValidations = {
+  email: [(value) => value.includes('@'), 'El email debe tener un @'],
+  password: [(value) => value.lenght >=6 , 'El password debe tener mas de 6 letras'],
+  displayName: [(value) => value.includes >=1, 'El nombre es obligatorio']
+}
 export const RegisterPage = () => {
-  const formValidations = {
-    email: [(value) => value.includes('@'), 'El email debe tener un @'],
-    password: [(value) => value.lenght >=6 , 'El password debe tener mas de 6 letras'],
-    displayName: [(value) => value.includes >=1, 'El nombre es obligatorio']
-  }
 
   const { 
     formState, displayName, email, password, onInputChange, 
     isFormValid, displayNameValid, emailValid, passwordValid
   } =useForm(formData, formValidations);
   
-  console.log(displayNameValid);
-  
-
   const onSubmit = (event) =>{
     event.preventDefault();
-    console.log(formState, formValidations);
+    console.log(formState);
   }
 
   return (
     <AuthLayout title='Register'>
+    <h1>FormValid {isFormValid ? 'Valido': 'Incorrecto'}</h1>
       <form onSubmit={ onSubmit }>
         <Grid container>
           <Grid item xs={ 12 } sx={{ marginTop: 2 }}>
@@ -56,8 +54,8 @@ export const RegisterPage = () => {
               name='email' 
               value={ email }
               onChange={ onInputChange }
-              error ={ !emailValid }
-              helperText={ emailValid }
+              // error ={ !emailValid }
+              // helperText={ emailValid }
             />
           </Grid>
 
@@ -70,8 +68,8 @@ export const RegisterPage = () => {
               name='password'
               value={ password }
               onChange={ onInputChange }
-              error ={ !passwordValid }
-              helperText={ passwordValid }
+              // error ={ !passwordValid }
+              // helperText={ passwordValid }
             />
           </Grid>
 

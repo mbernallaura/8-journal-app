@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const useForm = ( initialForm = {}, formValidations = {} ) => {
-
     const [ formState, setFormState ] = useState( initialForm );
-    const [formValidation, setFormValidation] = useState(); //?Validar si hay un error con los campos del form 
+    const [formValidation, setFormValidation] = useState({}); //?Validar si hay un error con los campos del form 
     useEffect(() => {
         createValidator();
     }, [formState])
+
+    const isFormValid = useMemo( () =>{
+        for (const formValue of Object.keys( formValidation )) {
+            if( formValidation[formValue] !==null ) return false;
+        }
+        return true;
+    }, [ formValidation ])
     
     const onInputChange = ({ target }) => {
         const { name, value } = target;
@@ -24,7 +30,7 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
         const formCheckedValues = {};
         for (const formField of Object.keys( formValidations )) { 
             //!En la siguiente linea de codigo desfragmentamos el objeto para objetener la funcion que es con la que se valida los campos 
-            const [ fn, errorMessage = 'Este campo es requerido' ] = formValidations[ formField ];
+            const [ fn, errorMessage ] = formValidations[ formField ];
 
             //!formState[ formField ] para saber el valor de la funcion, aplicas lo del objeto de javascript
             //en este caso en const formState ={email: 'ejemplo@gmail.com', password: 'Mustang'} trae estos valores
@@ -35,6 +41,7 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
         }
 
         setFormValidation( formCheckedValues );
+        // console.log(formCheckedValues);  
     }
 
     return {
@@ -42,6 +49,7 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
         formState,
         onInputChange,
         onResetForm,
-        ...formValidation
+        ...formValidation,
+        isFormValid
     }
 }
