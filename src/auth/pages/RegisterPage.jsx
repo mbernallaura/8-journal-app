@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks/useForm';
 
 const formData = {
-  email: 'prueba@gmail.com',
-  password: '123456',
-  displayName: 'Prueba'
+  email: '',
+  password: '',
+  displayName: ''
 }
 
 const formValidations = {
@@ -15,6 +16,7 @@ const formValidations = {
   displayName: [(value) => value.length >=1, 'El nombre es obligatorio']
 }
 export const RegisterPage = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false); //?Verificar si el usuario intento enviar el formulario o no
 
   const { 
     formState, displayName, email, password, onInputChange, 
@@ -23,12 +25,12 @@ export const RegisterPage = () => {
   
   const onSubmit = (event) =>{
     event.preventDefault();
-    // console.log(formState);
+    setFormSubmitted(true);
+    console.log(formState);
   }
 
   return (
     <AuthLayout title='Register'>
-    <h1>FormValid {isFormValid ? 'Valido': 'Incorrecto'}</h1>
       <form onSubmit={ onSubmit }>
         <Grid container>
           <Grid item xs={ 12 } sx={{ marginTop: 2 }}>
@@ -40,7 +42,7 @@ export const RegisterPage = () => {
               name='displayName'
               value={displayName}
               onChange={ onInputChange }
-              error ={ !displayNameValid }
+              error ={ !!displayNameValid && formSubmitted} //La doble negacion es para convertirlo en valor buleano
               helperText={ displayNameValid }
             />
           </Grid>
@@ -54,8 +56,8 @@ export const RegisterPage = () => {
               name='email' 
               value={ email }
               onChange={ onInputChange }
-              // error ={ !emailValid }
-              // helperText={ emailValid }
+              error ={ !!emailValid && formSubmitted}
+              helperText={ emailValid }
             />
           </Grid>
 
@@ -68,8 +70,8 @@ export const RegisterPage = () => {
               name='password'
               value={ password }
               onChange={ onInputChange }
-              // error ={ !passwordValid }
-              // helperText={ passwordValid }
+              error ={ !!passwordValid && formSubmitted}
+              helperText={ passwordValid }
             />
           </Grid>
 
