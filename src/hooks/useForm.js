@@ -40,12 +40,9 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
             //ya que tenemos ese valor ahora con la funcion desestructurada del objeto podemos introducirle ese valor para que evalue
             //Como la funcion es: (value) => value.includes('@'), evalua si el string tiene @, si la funcion es verdad, entonces null sino, manda un mensaje de error
             formCheckedValues[`${ formField }Valid`] = fn(formState[ formField ]) ? null : errorMessage; 
-            // console.log(formCheckedValues);
-            
         }
 
         setFormValidation( formCheckedValues );
-        // console.log(formCheckedValues);  
     }
 
     return {

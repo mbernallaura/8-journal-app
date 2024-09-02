@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks/useForm';
+import { startCreatingWithEmailPassword } from '../../store/auth/thunks';
 
 const formData = {
   email: '',
@@ -16,6 +18,7 @@ const formValidations = {
   displayName: [(value) => value.length >=1, 'El nombre es obligatorio']
 }
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
   const [formSubmitted, setFormSubmitted] = useState(false); //?Verificar si el usuario intento enviar el formulario o no
 
   const { 
@@ -26,7 +29,8 @@ export const RegisterPage = () => {
   const onSubmit = (event) =>{
     event.preventDefault();
     setFormSubmitted(true);
-    console.log(formState);
+    if(!isFormValid)return;
+    dispatch(startCreatingWithEmailPassword(formState));
   }
 
   return (
