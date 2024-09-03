@@ -38,8 +38,7 @@ export const registerUserWithEmailPassword = async({email, password, displayName
             uid, photoURL, email, displayName
         }
     } catch (error) {
-        console.log(error);
-        
+        //? Rectificar que error hay 
         return {
             ok: false,
             errorMessage: error.message
