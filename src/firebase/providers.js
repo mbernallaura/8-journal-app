@@ -1,5 +1,6 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { FirebaseAuth } from "./config";
+import { getAccordionActionsUtilityClass } from "@mui/material";
 
 const googleProvider = new GoogleAuthProvider();//? Crear una nuea instancia
 
@@ -39,6 +40,24 @@ export const registerUserWithEmailPassword = async({email, password, displayName
         }
     } catch (error) {
         //? Rectificar que error hay 
+        return {
+            ok: false,
+            errorMessage: error.message
+        }
+    }
+}
+
+
+
+export const loginWithEmailPassword = async({email, password}) =>{
+    try {
+        const resp = await signInWithEmailAndPassword(FirebaseAuth, email, password); //! Intentar ingresar con ese correo para saber si ya esta registrado, de lo contrario firebase manda error
+        const {uid, photoURL, displayName} = resp.user;
+        return {
+            ok: true,
+            uid, photoURL, displayName
+        };
+    } catch (error) {
         return {
             ok: false,
             errorMessage: error.message
