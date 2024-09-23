@@ -25,7 +25,7 @@ export const authSlice = createSlice({
             state.email= null,
             state.displayName= null,
             state.photoURL= null,
-            state.errorMessage= payload.errorMessage;
+            state.errorMessage= payload?.errorMessage;//!El signo ? es para decir si viene el payload muestre el errorMessagey si no hay payload no haga nada
         },
         //estado de loading mientras se loguea el usuario, aca se bloquean botones 
         checkingCredentials: (state) =>{

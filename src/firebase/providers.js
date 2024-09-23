@@ -64,3 +64,7 @@ export const loginWithEmailPassword = async({email, password}) =>{
         }
     }
 }
+
+export const logoutFirebase = async() =>{
+    return await FirebaseAuth.signOut(); //!Cierra facebook, twitter, microsoft, google etc.. todas las sesiones 
+}
