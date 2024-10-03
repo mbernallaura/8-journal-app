@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { Google} from '@mui/icons-material';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
@@ -9,14 +9,16 @@ import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks/useForm';
 import { startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth/thunks';
 
+const formData = {
+  email: '', 
+  password: ''
+}
+
 export const LoginPage = () => {
   const dispatch = useDispatch();
   // const [formSubmited, setFormSubmited] = useState(false);
   const { status, errorMessage } = useSelector(state => state.auth);
-  const { email, password, onInputChange, emailValid, passwordValid, isFormValid } =useForm({
-    email: '', 
-    password: ''
-  })
+  const { email, password, onInputChange, emailValid, passwordValid, isFormValid } =useForm( formData );
   const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
   const onSubmit = ( event ) => {
