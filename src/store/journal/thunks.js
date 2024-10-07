@@ -1,6 +1,6 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../firebase/config";
-import { addNewEmptyNote, setActiveNote, savingNewNote, setNotes } from "./";
+import { addNewEmptyNote, setActiveNote, savingNewNote, setNotes, setSaving, updateNote } from "./";
 import { loadNotes } from "../../helpers";
 
 export const startNewNote = () =>{
@@ -28,5 +28,18 @@ export const startLoadingNotes = () =>{
         if (!uid ) throw new Error("El UID del usuario no existe");
         const notes =  await loadNotes( uid );
         dispatch( setNotes( notes ) );
+    }
+}
+
+export const startSavingNote = () =>{
+    return async(dispatch, getState)=>{
+        dispatch(setSaving());
+        const { uid } = getState().auth;
+        const { activeNote:note } = getState().journal;
+        const noteToFirestore = {...note};
+        delete noteToFirestore.id //!Se puede borrar un atributo con delete, es una propiedad de javascript
+        const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
+        await setDoc(docRef, noteToFirestore, { merge:true }); //! Se coloca el merge:true, para fusionar los datos que enviamos al id que ya hay en BD y para que no cree otro id sino se conserve el que ya tiene
+        dispatch(updateNote(note));      
     }
 }
