@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMemo, useEffect, useRef } from "react";
 
 import { useForm } from "../../hooks";
-import { setActiveNote, startSavingNote } from "../../store/journal";
+import { setActiveNote, startSavingNote, startUploadingFiles } from "../../store/journal";
 
 
 export const NoteView = () => {
@@ -38,7 +38,7 @@ export const NoteView = () => {
 
     const onFileInputChange = ({target}) =>{
         if(target.files === 0) return;
-        // dispatch(startUploadingFiles(target.files));
+        dispatch(startUploadingFiles(target.files));
     }
 
     return (
