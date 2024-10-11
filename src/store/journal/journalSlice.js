@@ -54,8 +54,22 @@ export const journalSlice = createSlice({
             state.activeNote.imageUrls = [...state.activeNote.imageUrls, ...action.payload];
             state.isSaving = false;
         },
-        deleteNodeById: (state, action) =>{
+        clearNotesLogout: (state) =>{
+            state.isSaving = false;
+            state.messageSaved = '';
+            state.notes = [];
+            state.activeNote = null;
+        },
+        deleteNoteById: (state, action) =>{
             //Eliminar una nota dependienod del id
+            state.notes = state.notes.filter(note => note.id !== action.payload);
+            state.activeNote = null;
+            //Se haria de esa manera si no se tuviera toolkit
+            // return{
+            //     ...state,
+            //     active: null,
+            //     notes: state.notes = state.notes.filter(note => note.id !== action.payload);
+            // }
         }
     }
 });
@@ -65,10 +79,11 @@ export const journalSlice = createSlice({
 export const {
     savingNewNote, 
     addNewEmptyNote,
+    clearNotesLogout,
     setActiveNote,
     setNotes,
     setPhotosToActiveNote,
     setSaving,
     updateNote,
-    deleteNodeById
+    deleteNoteById
 } = journalSlice.actions;
