@@ -50,6 +50,10 @@ export const journalSlice = createSlice({
             //Cuando la nota ya se actualiza
             state.messageSaved  = `${action.payload.title}, actualizada correctamente`;
         },
+        setPhotosToActiveNote:(state, action) =>{
+            state.activeNote.imageUrls = [...state.activeNote.imageUrls, ...action.payload];
+            state.isSaving = false;
+        },
         deleteNodeById: (state, action) =>{
             //Eliminar una nota dependienod del id
         }
@@ -63,6 +67,7 @@ export const {
     addNewEmptyNote,
     setActiveNote,
     setNotes,
+    setPhotosToActiveNote,
     setSaving,
     updateNote,
     deleteNodeById
